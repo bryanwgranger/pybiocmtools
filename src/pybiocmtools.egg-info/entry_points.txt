@@ -1,0 +1,2 @@
+[console_scripts]
+create_slurm_header = pybiocmtools.slurm_tools:create_slurm_header

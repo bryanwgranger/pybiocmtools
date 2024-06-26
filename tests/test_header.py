@@ -1,6 +1,7 @@
 import chevron
 import datetime
 
+
 def create_slurm_header(job_name=f"slurm_job_{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M')}",
                         nodes=1,
                         ntasks=8,
@@ -37,3 +38,9 @@ def create_slurm_header(job_name=f"slurm_job_{datetime.datetime.now().strftime('
     slurm_header = chevron.render(slurm_template, data=data)
 
     return slurm_header
+
+print(create_slurm_header(job_name="test_job",
+                          gpus=2,
+                          mail_type="FAIL",
+                          bryan="granger"))
+

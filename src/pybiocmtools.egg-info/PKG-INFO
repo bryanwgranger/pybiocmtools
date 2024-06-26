@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: pybiocmtools
+Version: 0.0.2
+Summary: Tools for the BioCM at MUSC
+Author-email: Bryan Granger <grangerb@musc.edu>
+Project-URL: Homepage, https://github.com/bioinformaticsmusc/pybiocmtools
+Project-URL: Issues, https://github.com/bioinformaticsmusc/pybiocmtools/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# pybiocmtools
+
+This is a small package that includes 
+tools and utilities for the Bioinformatics 
+Core at MUSC.
