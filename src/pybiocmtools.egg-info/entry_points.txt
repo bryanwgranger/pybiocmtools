@@ -1,2 +1,5 @@
 [console_scripts]
+create_cellranger = pybiocmtools.create_cellranger_scripts:create_cellranger_script
 create_slurm_header = pybiocmtools.slurm_tools:create_slurm_header
+load_anndata = pybiocmtools.data_tools:load_anndata
+pybiocmtools = pybiocmtools.base_cli:main

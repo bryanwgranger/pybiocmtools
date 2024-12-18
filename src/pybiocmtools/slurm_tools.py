@@ -1,5 +1,7 @@
 import chevron
 import datetime
+import os
+import re
 
 def create_slurm_header(job_name=f"slurm_job_{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M')}",
                         nodes=1,
@@ -31,9 +33,12 @@ def create_slurm_header(job_name=f"slurm_job_{datetime.datetime.now().strftime('
 
     if kwargs:
         for k in kwargs.keys():
+            if "_" in k:
+                k = k.replace("_", "-")
             slurm_template += f"#SBATCH --{k}=" + "{{" + k + "}}\n"
         data.update(kwargs)
 
     slurm_header = chevron.render(slurm_template, data=data)
 
     return slurm_header
+
