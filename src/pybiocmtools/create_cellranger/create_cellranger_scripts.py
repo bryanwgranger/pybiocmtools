@@ -5,11 +5,14 @@ import chevron
 from pybiocmtools.slurm_tools import create_slurm_header
 def create_cellranger_script(args):
 
-    if not os.path.exists(args.outs_path):
-        os.makedirs(args.outs_path)
+    if not os.path.exists(args.cr_run_path):
+        os.makedirs(args.cr_run_path)
 
-    cr_file_template = ("mkdir -p {{outs_path}}\n"
-                        "cd {{outs_path}}\n\n"
+    if not os.path.exists(args.script_path):
+        os.makedirs(args.script_path)
+
+    cr_file_template = ("mkdir -p {{cr_run_path}}\n"
+                        "cd {{cr_run_path}}\n\n"
                         "\tcellranger count \\\n"
                         "\t--id={{sample}} \\\n"
                         "\t--sample={{sample}} \\\n"
@@ -18,10 +21,10 @@ def create_cellranger_script(args):
                         "\t--localcores=24 \\\n"
                         "\t--localmem=200")
 
-    cr_file_template_singularity = ("mkdir -p {{outs_path}}\n"
-                        "cd {{outs_path}}\n\n"
+    cr_file_template_singularity = ("mkdir -p {{cr_run_path}}\n"
+                        "cd {{cr_run_path}}\n\n"
                         "singularity exec -B /project/stefanoberto/musc:/project/stefanoberto/musc \\\n"
-                        "\t--pwd {{outs_path}} \\\n"
+                        "\t--pwd {{cr_run_path}} \\\n"
                         "\t/project/stefanoberto/musc/singularity_images/biocm-cellranger_latest.sif \\\n"
                         "\tcellranger count \\\n"
                         "\t--id={{sample}} \\\n"
@@ -35,8 +38,8 @@ def create_cellranger_script(args):
     samples = set([re.split(pattern="_S\d_", string=s)[0] for s in fastq_files])
     for sample in samples:
         script_name = f"{args.script_prefix}_{sample}.sh" if args.script_prefix else f"cr_{sample}.sh"
-        file_out_path = os.path.join(args.outs_path, script_name)
-        with open(file_out_path, "w") as outfile:
+        script_save_path = os.path.join(args.script_path, script_name)
+        with open(script_save_path, "w") as outfile:
             outfile.write(create_slurm_header(job_name=script_name.replace('.sh', ''),
                                               nodes=1,
                                               ntasks=32,
@@ -50,13 +53,13 @@ def create_cellranger_script(args):
                                              data={"sample": sample,
                                                    "transcriptome_path": args.transcriptome_path,
                                                    "fastq_path": args.fastq_path,
-                                                   "outs_path": args.outs_path,}))
+                                                   "cr_run_path": args.cr_run_path,}))
             else:
                 outfile.write(chevron.render(template=cr_file_template,
                                              data={"sample": sample,
                                                    "transcriptome_path": args.transcriptome_path,
                                                    "fastq_path": args.fastq_path,
-                                                   "outs_path": args.outs_path, }))
+                                                   "cr_run_path": args.cr_run_path, }))
 #
 # if __name__ == "__main__":
 #     # setting the parameters

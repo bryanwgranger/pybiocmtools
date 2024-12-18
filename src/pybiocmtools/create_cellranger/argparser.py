@@ -9,7 +9,8 @@ def add_subparser_args(subparsers: argparse) -> argparse:
                                       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     subparser.add_argument('--fastq-path', default=None, required=True, dest="fastq_path",)
     subparser.add_argument('--transcriptome-path', default=None, required=True, dest="transcriptome_path",)
-    subparser.add_argument('--outs-path', default='./run', required=False, dest="outs_path",)
+    subparser.add_argument('--cr-run-path', default='./run', required=False, dest="cr_run_path",)
+    subparser.add_argument('--script-path', default='./script', required=False, dest="script_path",)
     subparser.add_argument('--script-prefix', default=None, required=False, dest="script_prefix",)
     subparser.add_argument('--singularity', default=False, action="store_true", required=False, dest="singularity",)
 
