@@ -35,7 +35,8 @@ def create_cellranger_script(args):
     samples = set([re.split(pattern="_S\d_", string=s)[0] for s in fastq_files])
     for sample in samples:
         script_name = f"{args.script_prefix}_{sample}.sh" if args.script_prefix else f"cr_{sample}.sh"
-        with open(f"{script_name.replace('.sh', '')}.sh", "w") as outfile:
+        file_out_path = os.path.join(args.outs_path, script_name)
+        with open(file_out_path, "w") as outfile:
             outfile.write(create_slurm_header(job_name=script_name.replace('.sh', ''),
                                               nodes=1,
                                               ntasks=32,
