@@ -1,8 +1,8 @@
 import os
 import re
 import chevron
-from pybiocmtools.create_sbatch.create_sbatch import create_slurm_header
-
+#from pybiocmtools.create_sbatch.create_sbatch import create_slurm_header
+from pybiocmtools.slurm_tools import create_slurm_header
 def create_cellranger_script(args):
 
     if not os.path.exists(args.outs_path):

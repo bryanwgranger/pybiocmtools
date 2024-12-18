@@ -27,4 +27,4 @@ class CLI(AbstractCLI):
 
 def main(args):
     slurm_header = create_cellranger_script(args)
-    print(f"Cellranger script has been created at {args.file_name} with header: \n{slurm_header}")
+    print(f"Cellranger script has been created at {args.file_name}")
